@@ -3330,17 +3330,34 @@ function RayfieldLibrary:CreateWindow(Settings)
 			TweenService:Create(Slider, TweenInfo.new(0.7, Enum.EasingStyle.Exponential), {BackgroundTransparency = 0}):Play()
 			TweenService:Create(Slider.UIStroke, TweenInfo.new(0.7, Enum.EasingStyle.Exponential), {Transparency = 0}):Play()
 			TweenService:Create(Slider.Title, TweenInfo.new(0.7, Enum.EasingStyle.Exponential), {TextTransparency = 0}):Play()	
+                                                                                                                                                                                                                                                                                               
+Slider.Main.ClipsDescendants = true
+Slider.Main.Progress.Position = UDim2.new(0, 3, 0, 3)
+
+repeat
+    task.wait()
+until Slider.Main.AbsoluteSize.X > 0
+
+local Percent = math.clamp(
+    (SliderSettings.CurrentValue - SliderSettings.Range[1]) /
+    (SliderSettings.Range[2] - SliderSettings.Range[1]),
+    0,
+    1
+)
+
+local Width =
+    math.max(
+        (Slider.Main.AbsoluteSize.X - 6) * Percent,
+        5
+    )
 
 Slider.Main.Progress.Size =
     UDim2.new(
         0,
-        Slider.Main.AbsoluteSize.X * ((SliderSettings.CurrentValue + SliderSettings.Range[1]) / (SliderSettings.Range[2] - SliderSettings.Range[1])) > 5
-            and Slider.Main.AbsoluteSize.X * (SliderSettings.CurrentValue / (SliderSettings.Range[2] - SliderSettings.Range[1]))
-            or 5,
+        Width,
         1,
         -6
-    )
-			if not SliderSettings.Suffix then
+    )		if not SliderSettings.Suffix then
 				Slider.Main.Information.Text = tostring(SliderSettings.CurrentValue)
 			else
 				Slider.Main.Information.Text = tostring(SliderSettings.CurrentValue) .. " " .. SliderSettings.Suffix
@@ -4009,3 +4026,17 @@ task.delay(4, function()
 end)
 
 return RayfieldLibrary
+
+
+
+
+
+			
+	
+		
+			
+			
+	
+
+					
+							
