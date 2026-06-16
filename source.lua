@@ -4013,38 +4013,6 @@ end
 --if not useStudio then
 --	task.spawn(loadWithTimeout, "https://raw.githubusercontent.com/SiriusSoftwareLtd/Sirius/refs/heads/request/boost.lua")
 --end
--- 桃紅 + 淺藍 流動漸層效果
-local function AddPinkBlueGradient(obj)
-	if not obj:IsA("GuiObject") then return end
-	if obj:FindFirstChild("PinkBlueGradient") then return end
-
-	local gradient = Instance.new("UIGradient")
-	gradient.Name = "PinkBlueGradient"
-	gradient.Color = ColorSequence.new({
-		ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 0, 150)),   -- 桃紅
-		ColorSequenceKeypoint.new(0.5, Color3.fromRGB(0, 191, 255)), -- 淺藍
-		ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 0, 150))    -- 桃紅
-	})
-	gradient.Rotation = 0
-	gradient.Parent = obj
-
-	task.spawn(function()
-		while gradient.Parent do
-			gradient.Rotation = (gradient.Rotation + 1) % 360
-			task.wait(0.02)
-		end
-	end)
-end
-
-task.spawn(function()
-	task.wait(1)
-
-	for _, v in ipairs(Main:GetDescendants()) do
-		if v:IsA("Frame") or v:IsA("TextButton") or v:IsA("ImageButton") then
-			AddPinkBlueGradient(v)
-		end
-	end
-end)
 
 task.delay(4, function()
 	RayfieldLibrary.LoadConfiguration()
